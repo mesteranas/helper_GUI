@@ -1,3 +1,4 @@
+from .askAIAvoutImages import AskAIAboutImagesGUI
 import guiTools
 from settings import *
 import PyQt6.QtWidgets as qt
@@ -39,5 +40,10 @@ class ImageDescriberGUI(qt.QDialog):
         self.result=guiTools.QReadOnlyTextEdit()
         self.result.setText(_("describing ... please wait"))
         layout.addWidget(self.result)
+        self.askAI=guiTools.QPushButton(_("ask helperAI about this image"))
+        self.askAI.setDisabled(True)
+        self.askAI.clicked.connect(lambda:AskAIAboutImagesGUI(self,image).exec())
+        layout.addWidget(self.askAI)
     def onDecribeCompelty(self,r):
         self.result.setText(r)
+        self.askAI.setDisabled(False)

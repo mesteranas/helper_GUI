@@ -1,6 +1,8 @@
 import sys
 from custome_errors import *
 sys.excepthook = my_excepthook
+import requests
+from io import BytesIO
 import update
 import gui
 import guiTools
@@ -17,6 +19,12 @@ class main (qt.QMainWindow):
         self.openimgFromFile=guiTools.QPushButton(_("open image from file"))
         self.openimgFromFile.clicked.connect(self.on_openIMGFromFile)
         layout.addWidget(self.openimgFromFile)
+        self.openIMGFromURL=guiTools.QPushButton(_("open image from internet"))
+        self.openIMGFromURL.clicked.connect(self.onOpenIMGFromInternet)
+        layout.addWidget(self.openIMGFromURL)
+        self.openCamera=guiTools.QPushButton(_("describe photo using your camera"))
+        self.openCamera.clicked.connect(lambda:gui.Camera(self).exec())
+        layout.addWidget(self.openCamera)
         self.setting=guiTools.QPushButton(_("settings"))
         self.setting.clicked.connect(lambda: settings(self).exec())
         layout.addWidget(self.setting)
@@ -76,6 +84,14 @@ class main (qt.QMainWindow):
         file=qt.QFileDialog(self)
         if file.exec()==file.DialogCode.Accepted:
             gui.ImageDescriberGUI(self,file.selectedFiles()[0]).exec()
+    def onOpenIMGFromInternet(self):
+        url,ok=qt.QInputDialog.getText(self,_("type URL"),_("URL"))
+        if ok:
+            try:
+                r=requests.get(url)
+                gui.ImageDescriberGUI(self,BytesIO(r.content)).exec()
+            except:
+                qt.QMessageBox.information(self,_("error"),_("can't load this image or no internet"))
 App=qt.QApplication([])
 w=main()
 w.show()
