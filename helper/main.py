@@ -1,6 +1,7 @@
 import sys
 from custome_errors import *
 sys.excepthook = my_excepthook
+import os
 import requests
 from io import BytesIO
 import update
@@ -11,6 +12,14 @@ import PyQt6.QtWidgets as qt
 import PyQt6.QtGui as qt1
 import PyQt6.QtCore as qt2
 language.init_translation()
+try:
+    for file in os.listdir(os.path.join(os.getenv('appdata'),settings_handler.appName,"pdf")):
+        try:
+            os.remove(os.path.join(os.getenv('appdata'),settings_handler.appName,"pdf",file))
+        except:
+            pass
+except:
+    pass
 class main (qt.QMainWindow):
     def __init__(self):
         super().__init__()
@@ -25,6 +34,9 @@ class main (qt.QMainWindow):
         self.openCamera=guiTools.QPushButton(_("describe photo using your camera"))
         self.openCamera.clicked.connect(lambda:gui.Camera(self).exec())
         layout.addWidget(self.openCamera)
+        self.pdfReader=guiTools.QPushButton(_("PDF reader"))
+        self.pdfReader.clicked.connect(self.on_PDFreader)
+        layout.addWidget(self.pdfReader)
         self.setting=guiTools.QPushButton(_("settings"))
         self.setting.clicked.connect(lambda: settings(self).exec())
         layout.addWidget(self.setting)
@@ -92,6 +104,12 @@ class main (qt.QMainWindow):
                 gui.ImageDescriberGUI(self,BytesIO(r.content)).exec()
             except:
                 qt.QMessageBox.information(self,_("error"),_("can't load this image or no internet"))
+    def on_PDFreader(self):
+        file=qt.QFileDialog(self)
+        file.setDefaultSuffix("pdf")
+        if file.exec()==file.DialogCode.Accepted:
+            gui.PDFReaderGUI(self,file.selectedFiles()[0]).exec()
+
 App=qt.QApplication([])
 w=main()
 w.show()
