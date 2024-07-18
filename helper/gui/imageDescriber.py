@@ -40,7 +40,7 @@ class ImageDescriberGUI(qt.QDialog):
         self.result=guiTools.QReadOnlyTextEdit()
         self.result.setText(_("describing ... please wait"))
         layout.addWidget(self.result)
-        self.askAI=guiTools.QPushButton(_("ask helperAI about this image"))
+        self.askAI=qt.QPushButton (_("ask helperAI about this image"))
         self.askAI.setDisabled(True)
         self.askAI.clicked.connect(lambda:AskAIAboutImagesGUI(self,image).exec())
         layout.addWidget(self.askAI)

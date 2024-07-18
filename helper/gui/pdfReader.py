@@ -46,7 +46,7 @@ class PDFReaderGUI(qt.QDialog):
             self.close()
         self.results={}
         self.index=1
-        self.previous=guiTools.QPushButton(_("previous page"))
+        self.previous=qt.QPushButton (_("previous page"))
         self.previous.setShortcut("alt+left")
         self.previous.clicked.connect(self.on_previous)
         layout=qt.QVBoxLayout(self)
@@ -54,11 +54,11 @@ class PDFReaderGUI(qt.QDialog):
         self.result=guiTools.QReadOnlyTextEdit()
         self.result.setText(_("describing ... please wait"))
         layout.addWidget(self.result)
-        self.next=guiTools.QPushButton(_("next page"))
+        self.next=qt.QPushButton (_("next page"))
         self.next.setShortcut("alt+right")
         self.next.clicked.connect(self.on_next)
         layout.addWidget(self.next)
-        self.askAI=guiTools.QPushButton(_("ask helperAI about this page"))
+        self.askAI=qt.QPushButton (_("ask helperAI about this page"))
         self.askAI.setDisabled(True)
         self.askAI.clicked.connect(lambda:AskAIAboutImagesGUI(self,os.path.join(os.getenv('appdata'),settings_handler.appName,"pdf",str(self.index) + ".png")).exec())
         layout.addWidget(self.askAI)

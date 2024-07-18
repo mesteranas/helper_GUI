@@ -20,7 +20,7 @@ class Camera(qt.QDialog):
         self.photo=QImageCapture(self)
         self.photo.imageCaptured.connect(self.onImageCaptured)
         self.media.setImageCapture(self.photo)
-        self.takePhoto=guiTools.QPushButton(_("take photo"))
+        self.takePhoto=qt.QPushButton (_("take photo"))
         self.takePhoto.clicked.connect(self.onTakePhoto)
         layout.addWidget(self.takePhoto)
         layout.addWidget(self.video)

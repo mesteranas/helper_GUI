@@ -38,7 +38,7 @@ class AskAIAboutImagesGUI(qt.QDialog):
         self.message=qt.QLineEdit()
         self.message.textChanged.connect(self.onMessageChanged)
         layout.addWidget(self.message)
-        self.send=guiTools.QPushButton(_("send"))
+        self.send=qt.QPushButton (_("send"))
         self.send.setDefault(True)
         self.send.setDisabled(True)
         self.send.clicked.connect(self.onSendClicked)

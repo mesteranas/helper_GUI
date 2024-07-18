@@ -1,4 +1,4 @@
-api=""
+api="AIzaSyA_u8y8SJNAyai76DWLDin5mWi3VPemOgY"
 name="helper"
 appName="helper_GUI"
 appdirname="helper"
